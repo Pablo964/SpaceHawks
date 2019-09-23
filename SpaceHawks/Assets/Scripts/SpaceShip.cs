@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
+    public AudioClip sonido;
+    
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
     // Update is called once per frame
     [SerializeField]private float velocidad = 30;
     void Update()
@@ -18,6 +19,10 @@ public class SpaceShip : MonoBehaviour
         if ((transform.position.x >= -5) && (transform.position.x <= 5))
         {
             transform.Translate(horizontal * velocidad * Time.deltaTime, 0, 0);
+        }
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GetComponent<AudioSource>().Play();
         }
     }
 }
