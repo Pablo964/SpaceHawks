@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.UI;
 public class SpaceShip : MonoBehaviour
 {
     public AudioClip sonido;
     [SerializeField] private Text scoreboardText;
-    [SerializeField] private float velocidad = 30;
+    [SerializeField] private float velocidad = 15;
+    public GameObject shot;
+    Vector2 shotPos;
+    public float fireRate = 0.5f;
+    float nextFire = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,15 +21,22 @@ public class SpaceShip : MonoBehaviour
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        if ((transform.position.x >= -5) && (transform.position.x <= 5))
+
+        transform.Translate(horizontal * velocidad * Time.deltaTime, 0, 0);
+        
+        if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
         {
-            transform.Translate(horizontal * velocidad * Time.deltaTime, 0, 0);
-        }
-        if (Input.GetButtonDown("Fire1"))
-        {
+            nextFire = Time.time + fireRate;
+            fire();
             GetComponent<AudioSource>().Play();
         }
 
+    }
+    void fire()
+    {
+        shotPos = transform.position;
+        shotPos += new Vector2(0f, 0.40f);
+        Instantiate(shot, shotPos, Quaternion.identity);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
