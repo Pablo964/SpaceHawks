@@ -11,6 +11,9 @@ public class SpaceShip : MonoBehaviour
     Vector2 shotPos;
     public float fireRate = 0.5f;
     float nextFire = 0.0f;
+    [SerializeField] private Transform prefabShot;
+    private float velocidadDisparo = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,20 +27,16 @@ public class SpaceShip : MonoBehaviour
 
         transform.Translate(horizontal * velocidad * Time.deltaTime, 0, 0);
         
-        if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
+        if (Input.GetButtonDown("Fire1"))
         {
-            nextFire = Time.time + fireRate;
-            fire();
+
+            Instantiate(prefabShot, transform.position, Quaternion.identity);
+
             GetComponent<AudioSource>().Play();
         }
 
     }
-    void fire()
-    {
-        shotPos = transform.position;
-        shotPos += new Vector2(0f, 0.40f);
-        Instantiate(shot, shotPos, Quaternion.identity);
-    }
+   
     private void OnTriggerEnter2D(Collider2D collision)
     {
         scoreboardText.text = "Hit!";
