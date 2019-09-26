@@ -8,11 +8,9 @@ public class SpaceShip : MonoBehaviour
     [SerializeField] private Text scoreboardText;
     [SerializeField] private float velocidad = 15;
     public GameObject shot;
-    Vector2 shotPos;
     public float fireRate = 0.5f;
-    float nextFire = 0.0f;
     [SerializeField] private Transform prefabShot;
-    private float velocidadDisparo = 2;
+
 
     // Start is called before the first frame update
     void Start()
