@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Spaceship : MonoBehaviour
+public class SpaceShip : MonoBehaviour
 {
     [SerializeField] private float speed = 50;
     //[SerializeField] private Text scoreboardText;

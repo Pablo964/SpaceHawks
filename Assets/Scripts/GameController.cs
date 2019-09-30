@@ -23,10 +23,6 @@ public class GameController : MonoBehaviour
         GenerateEnemies();
     }
 
-    private void Update()
-    {
-
-    }
 
     public void PlayerHit()
     {
@@ -42,12 +38,7 @@ public class GameController : MonoBehaviour
         totalEnemies--;
         DisplayStatus();
         Debug.Log(totalEnemies);
-        if (totalEnemies <= 2)
-        {
-            totalEnemies += 6;
-            enemyRows++;
-            Start();
-        }
+        
     }
 
     void DisplayStatus()
@@ -60,7 +51,6 @@ public class GameController : MonoBehaviour
     {
         float x = enemyPrefab.transform.position.x; 
         float y = enemyPrefab.transform.position.y;
-        Debug.Log(x);
         Vector3 position;
         for (int j = 0; j < enemyRows; j++)
         {
