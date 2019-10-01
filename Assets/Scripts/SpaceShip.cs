@@ -34,7 +34,7 @@ public class SpaceShip : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //scoreboardText.text = "Hit!";
-        if (collision.tag == "Enemy")
+        if (collision.tag == "Enemy" || collision.tag == "ShotEnemy")
         {
             game.PlayerHit();
         }

@@ -8,17 +8,20 @@ public class GameController : MonoBehaviour
 {
     private int lives = 3;
     private int points = 0;
-    private int level = 1;
-    private int totalEnemies = 24;
-    private int enemyRows = 4;
+    private static int level = 1;
+    private static int totalEnemies = 25;
+    private int newTotalEnemies = totalEnemies;
+    private static int enemyRows = 4;
     [SerializeField] Text scoreboardText;
     [SerializeField] Text gameoverText;
+    [SerializeField] Text newLevelText;
     [SerializeField] GameObject enemyPrefab;
 
 
     private void Start()
     {
         gameoverText.enabled = false;
+        newLevelText.enabled = false;
         DisplayStatus();
         GenerateEnemies();
     }
@@ -29,14 +32,27 @@ public class GameController : MonoBehaviour
         lives--;
         DisplayStatus();
         if (lives <= 0)
+        {
+            totalEnemies = 25;
+            enemyRows = 4;
+            level = 1;
+            lives = 3;
             StartCoroutine(FinishGame());
+        }
     }
 
     public void EnemyHit()
     {
         points += 10;
-        totalEnemies--;
         DisplayStatus();
+        totalEnemies--;
+        if (totalEnemies <= 0)
+        {
+            level++;
+            totalEnemies = newTotalEnemies + 6;
+            enemyRows += 1;
+            StartCoroutine(NewLevel());
+        }
         Debug.Log(totalEnemies);
         
     }
@@ -63,6 +79,14 @@ public class GameController : MonoBehaviour
             y -= 1;
             x = enemyPrefab.transform.position.x;
         }
+    }
+    IEnumerator NewLevel()
+    {
+        newLevelText.enabled = true;
+        Time.timeScale = 0.01f;
+        yield return new WaitForSecondsRealtime(4);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(1);
     }
     IEnumerator FinishGame()
     {
